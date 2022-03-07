@@ -1,5 +1,7 @@
 package com.websarva.wings.android.gamecheatapp.di
 
+import com.websarva.wings.android.gamecheatapp.repository.EncodeResultRepository
+import com.websarva.wings.android.gamecheatapp.repository.EncodeResultRepositoryClient
 import com.websarva.wings.android.gamecheatapp.repository.HttpConnectRepository
 import com.websarva.wings.android.gamecheatapp.repository.HttpConnectRepositoryClient
 import dagger.Binds
@@ -14,4 +16,8 @@ abstract class Module {
     @Singleton
     @Binds
     abstract fun bindHttpConnectRepository(httpConnectRepositoryClient: HttpConnectRepositoryClient): HttpConnectRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindEncodeResultRepository(encodeResultRepositoryClient: EncodeResultRepositoryClient): EncodeResultRepository
 }

@@ -93,7 +93,6 @@ class ResultActivity : AppCompatActivity() {
     }
 
     fun dialogResult(){
-        Log.d("test", "called")
         viewModel.connect(result)
     }
 }

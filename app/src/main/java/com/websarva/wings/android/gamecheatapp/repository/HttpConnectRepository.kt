@@ -1,6 +1,7 @@
 package com.websarva.wings.android.gamecheatapp.repository
 
 import android.util.Log
+import com.websarva.wings.android.gamecheatapp.model.EncodeResult
 import com.websarva.wings.android.gamecheatapp.model.Result
 import retrofit2.Call
 import retrofit2.Callback
@@ -13,15 +14,15 @@ import javax.inject.Inject
 
 interface HttpConnectService{
     @POST("/")
-    fun postJsonRequestForIndex(@Body result: Result): Call<Void>
+    fun postJsonRequestForIndex(@Body result: EncodeResult): Call<Void>
 }
 
 interface HttpConnectRepository {
-    fun connect(result: Result, listener: (result: Boolean) -> Unit)
+    fun connect(result: EncodeResult, listener: (result: Boolean) -> Unit)
 }
 
 class HttpConnectRepositoryClient @Inject constructor(): HttpConnectRepository {
-    override fun connect(result: Result, listener: (result: Boolean) -> Unit) {
+    override fun connect(result: EncodeResult, listener: (result: Boolean) -> Unit) {
         // retrofitの定義
         val retrofit = Retrofit.Builder().apply {
             baseUrl("http://192.168.11.4:8080")

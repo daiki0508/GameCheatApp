@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.websarva.wings.android.gamecheatapp.model.Result
+import com.websarva.wings.android.gamecheatapp.repository.EncodeResultRepositoryClient
 import com.websarva.wings.android.gamecheatapp.repository.HttpConnectRepositoryClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -13,6 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ResultViewModel @Inject constructor(
     private val httpConnectRepository: HttpConnectRepositoryClient,
+    private val encodeResultRepository: EncodeResultRepositoryClient,
     application: Application
 ) : AndroidViewModel(application) {
     private val _result = MutableLiveData<Boolean>()
@@ -21,7 +23,7 @@ class ResultViewModel @Inject constructor(
     }
 
     fun connect(result: Result){
-        httpConnectRepository.connect(result){
+        httpConnectRepository.connect(encodeResultRepository.encode(result)){
             _result.value = it
         }
     }
