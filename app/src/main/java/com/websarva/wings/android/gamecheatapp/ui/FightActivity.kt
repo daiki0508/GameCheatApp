@@ -15,5 +15,14 @@ class FightActivity : AppCompatActivity() {
         binding = ActivityFightBinding.inflate(layoutInflater).apply {
             setContentView(this.root)
         }
+
+        // 送信データのnullチェック
+        val extras = intent?.extras
+        if (extras != null && extras.containsKey("username")){
+            // usernameをセット
+            binding.tvUsername.text = extras.getString("username")
+        }else{
+            TODO("")
+        }
     }
 }
