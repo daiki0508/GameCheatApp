@@ -98,6 +98,7 @@ class FightActivity : AppCompatActivity() {
                 val intent = Intent(this, ResultActivity::class.java).apply {
                     // 送信データの作成
                     putExtra("clear", false)
+                    putExtra("username", username)
                 }
                 // 対象アクティビティの起動
                 startActivity(intent)
