@@ -12,6 +12,9 @@
         android:theme="@style/Theme.GameCheatApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.ResultActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.FightActivity"
             android:exported="false" />
         <activity
