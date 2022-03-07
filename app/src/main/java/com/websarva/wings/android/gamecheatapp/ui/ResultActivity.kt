@@ -4,14 +4,19 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.activity.viewModels
 import com.websarva.wings.android.gamecheatapp.R
 import com.websarva.wings.android.gamecheatapp.databinding.ActivityResultBinding
 import com.websarva.wings.android.gamecheatapp.model.Result
+import com.websarva.wings.android.gamecheatapp.viewmodel.ResultViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ResultActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResultBinding
+
+    private val viewModel: ResultViewModel by viewModels()
 
     private lateinit var result: Result
 
@@ -71,6 +76,15 @@ class ResultActivity : AppCompatActivity() {
                 }
             }
         }
+
+        // resultの通知
+        viewModel.result.observe(this){
+            Toast.makeText(this, if (it){
+                "Connection Success!!"
+            }else{
+                "Connection Failure..."
+            }, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun finishApp(message: String){
@@ -80,5 +94,6 @@ class ResultActivity : AppCompatActivity() {
 
     fun dialogResult(){
         Log.d("test", "called")
+        viewModel.connect(result)
     }
 }
