@@ -3,12 +3,17 @@
     package="com.websarva.wings.android.gamecheatapp">
 
     <application
-        android:allowBackup="true"
+        android:name=".di.Application"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.GameCheatApp">
+        android:theme="@style/Theme.GameCheatApp"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.FightActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
