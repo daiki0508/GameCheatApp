@@ -1,41 +1,42 @@
 Java.perform(function(){
     var fightActivity = Java.use("com.websarva.wings.android.gamecheatapp.ui.FightActivity");
-    fightActivity.userAttack.implementation = function(v){
-        console.log('[*] userAttack() Hook!');
-        var random = Java.use("kotlin.random.Random$Default");
-        random.nextInt.overload('int').implementation = function(int){
-            console.log("[*] nextInt() Hook!");
+    fightActivity.v.implementation = function(v){
+        console.log('[*] v() Hook!');
+        var a = Java.use("h3.c$a");
+        a.b.implementation = function(int){
+            console.log('[*] b() Hook!');
             if(int == 100){
                 // userの攻撃力を改ざん
                 console.log("[*] Changed the damage that User deals to Fenrir.");
                 return 200;
             }else{
-                return this.nextInt(int);
+                return this.b(int);
             }
-        }
-        this.userAttack(v);
+        };
+        this.v(v);
     }
-    fightActivity.fenrirAttack.implementation = function(v){
-        console.log('[*] fenrirAttack() Hook!');
-        var random = Java.use("kotlin.random.Random$Default");
-        random.nextInt.overload('int').implementation = function(int){
-            console.log("[*] nextInt() Hook!");
+    fightActivity.onTouchEvent.implementation = function(e){
+        console.log('[*] onTouchEvent() Hook!');
+        var a = Java.use("h3.c$a");
+        a.b.implementation = function(int){
+            console.log('[*] b() Hook!');
             if(int == 150){
                 // フェンリルの攻撃力を改ざん
                 console.log('[*] Changed the damage that Fenrir deals to User.')
                 return 0;
             }else{
-                return this.nextInt(int);
+                return this.b(int);
             }
         }
-        this.fenrirAttack(v);
+        this.onTouchEvent(e);
+        return true;
     }
 
     fightActivity.onCreate.implementation = function(b){
         console.log('[*] onCreate() Hook!');
-        var random = Java.use("kotlin.random.Random$Default");
-        random.nextInt.overload('int').implementation = function(int){
-            console.log("[*] nextInt() Hook!");
+        var a = Java.use("h3.c$a");
+        a.b.implementation = function(int){
+            console.log('[*] b() Hook!');
             if(int == 251){
                 // UserのdefaultHPを改ざん
                 console.log('[*] Changed User\'s default HP.')
@@ -45,9 +46,10 @@ Java.perform(function(){
                 console.log('[*] Changed Fenrir\'s default HP.')
                 return -300;
             }else{
-                return this.nextInt(int);
+                return this.b(int);
             }
         }
+        
         this.onCreate(b);
     }
 })
