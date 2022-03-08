@@ -35,11 +35,12 @@ class EncodeResultRepositoryClient @Inject constructor(): EncodeResultRepository
         val encryptStr: String
 
         try {
-            // 複合化処理開始
+            // 暗号化処理開始
             secretKey = SecureSecretKey(Base64.decode("QzhCc2ZBRjN3UEdGaDZkOHllSzR6aFF4WU4zY21uWGQ=", Base64.DEFAULT), "AES")
-            val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding")
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey)
-            encryptStr = Base64.encodeToString(cipher.doFinal(src.toByteArray()), Base64.DEFAULT)
+            Cipher.getInstance("AES/ECB/PKCS7Padding").apply {
+                init(Cipher.ENCRYPT_MODE, secretKey)
+                encryptStr = Base64.encodeToString(doFinal(src.toByteArray()), Base64.DEFAULT)
+            }
         } finally {
             // メモリからカギを削除
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -48,10 +49,10 @@ class EncodeResultRepositoryClient @Inject constructor(): EncodeResultRepository
                 for (i in secretKey!!.encoded.indices) {
                     secretKey.encoded[i] = nonSecret[i % nonSecret.size]
                 }
-                val out = FileOutputStream("dev/null")
-                out.write(secretKey.encoded)
-                out.flush()
-                out.close()
+                FileOutputStream("dev/null").use {
+                    it.write(secretKey.encoded)
+                    it.flush()
+                }
             }
         }
         return encryptStr
