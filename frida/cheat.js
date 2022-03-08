@@ -9,10 +9,6 @@ Java.perform(function(){
                 // userの攻撃力を改ざん
                 console.log("[*] Changed the damage that User deals to Fenrir.");
                 return 200;
-            }else if(int == 150){
-                // フェンリルの攻撃力を改ざん
-                console.log('[*] Changed the damage that Fenrir deals to User.')
-                return 0;
             }else{
                 return this.nextInt(int);
             }
@@ -47,7 +43,7 @@ Java.perform(function(){
             }else if(int == 501){
                 // フェンリルのdefaultHPを改ざん
                 console.log('[*] Changed Fenrir\'s default HP.')
-                return -300;
+                return 100;
             }else{
                 return this.nextInt(int);
             }
