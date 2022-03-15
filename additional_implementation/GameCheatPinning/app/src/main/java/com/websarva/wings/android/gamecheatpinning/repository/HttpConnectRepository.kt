@@ -1,7 +1,10 @@
 package com.websarva.wings.android.gamecheatpinning.repository
 
 import android.util.Log
+import com.websarva.wings.android.gamecheatpinning.BuildConfig
 import com.websarva.wings.android.gamecheatpinning.model.EncodeResult
+import okhttp3.CertificatePinner
+import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,9 +25,18 @@ interface HttpConnectRepository {
 
 class HttpConnectRepositoryClient @Inject constructor(): HttpConnectRepository {
     override fun connect(result: EncodeResult, listener: (result: Boolean) -> Unit) {
+        // okhttpの定義
+        val client = OkHttpClient.Builder().apply {
+            certificatePinner(CertificatePinner.Builder().apply {
+                add(BuildConfig.SERVER_HOST, "sha256/stpeNz7s4yZHGrv966oJooUnfC5Da1r9uIrzWWlKSjI=")
+                add(BuildConfig.SERVER_HOST, "sha256/C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M=")
+            }.build())
+        }.build()
+
         // retrofitの定義
         val retrofit = Retrofit.Builder().apply {
-            baseUrl("http://192.168.11.4:8080")
+            baseUrl(BuildConfig.SERVER_ADDRESS)
+            client(client)
             addConverterFactory(GsonConverterFactory.create())
         }.build()
         // データの送信
