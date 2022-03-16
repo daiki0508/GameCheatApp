@@ -126,7 +126,7 @@ class FightActivity : AppCompatActivity() {
         binding.pbFenrirHp.progress -= damage
     }
     private fun fenrirAttack(tvMessage: TextView){
-        // ダメージを1～100の間のランダムに設定
+        // ダメージを1～150の間のランダムに設定
         damage = Random.nextInt(150) + 1
 
         // メッセージの更新
