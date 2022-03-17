@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.websarva.wings.android.gamecheatxor.R
 import com.websarva.wings.android.gamecheatxor.databinding.ActivityFightBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.security.SecureRandom
 import kotlin.random.Random
 
 @AndroidEntryPoint
@@ -19,6 +20,10 @@ class FightActivity : AppCompatActivity() {
     private lateinit var username: String
     private var damage: Int = 0
     private var maxDamage: Int = 0
+    private var userHp: Int = 0
+    private var fenrirHp: Int = 0
+    private var userRandom: Int = 0
+    private var fenrirRandom: Int = 0
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,16 +43,28 @@ class FightActivity : AppCompatActivity() {
             // フェンリルのHPを設定
             binding.pbFenrirHp.apply {
                 val defaultHp = Random.nextInt(501) + 500
-                max = defaultHp
-                progress = defaultHp
-                binding.tvFenrirHp.text = defaultHp.toString()
+                // SecureRandomで値を生成
+                fenrirRandom = SecureRandom().nextInt()
+                // グローバル領域にエンコードして値を保存
+                fenrirHp = defaultHp.xor(fenrirRandom)
+
+                // 値をデコードして使用
+                max = fenrirHp.xor(fenrirRandom)
+                progress = fenrirHp.xor(fenrirRandom)
+                binding.tvFenrirHp.text = fenrirHp.xor(fenrirRandom).toString()
             }
             // ユーザーのHP設定
             binding.pbUserHp.apply {
                 val defaultHp = Random.nextInt(251) + 250
-                max = defaultHp
-                progress = defaultHp
-                binding.tvUserHp.text = defaultHp.toString()
+                // SecureRandomで値を生成
+                userRandom = SecureRandom().nextInt()
+                // グローバル領域にエンコードして値を保存
+                userHp = defaultHp.xor(userRandom)
+
+                // 値をデコードして使用
+                max = userHp.xor(userRandom)
+                progress = userHp.xor(userRandom)
+                binding.tvUserHp.text = userHp.xor(userRandom).toString()
             }
 
             // メッセージの初期化
@@ -84,11 +101,12 @@ class FightActivity : AppCompatActivity() {
                 Log.i("result", "game clear")
                 val intent = Intent(this, ResultActivity::class.java).apply {
                     // 送信データの作成
+                    // 保存した値をデコードして使用
                     putExtra("clear", true)
                     putExtra("username", username)
                     putExtra("turn", binding.tvTurn.text.toString().toInt())
-                    putExtra("userHp", binding.pbUserHp.progress)
-                    putExtra("maxDamage", maxDamage)
+                    putExtra("userHp", userHp.xor(userRandom))
+                    putExtra("maxDamage", maxDamage.xor(userRandom))
                 }
                 // 対象アクティビティの起動
                 startActivity(intent)
@@ -112,29 +130,39 @@ class FightActivity : AppCompatActivity() {
     private fun userAttack(tvMessage: TextView){
         // ダメージを1～100の間のランダムに設定
         damage = Random.nextInt(100) + 1
+        // HPの更新
+        // 値をデコードして使用した後にグローバル領域に再びエンコードして保存
+        fenrirHp = (fenrirHp.xor(fenrirRandom) - damage).xor(fenrirRandom)
+
         // 最大ダメージを保存
         if (damage > maxDamage){
-            maxDamage = damage
+            // グローバル領域にエンコードして値を保存
+            maxDamage = damage.xor(userRandom)
         }
 
         // メッセージの更新
         tvMessage.text = getString(R.string.textMessage2, username, damage)
-        // HPの更新
-        binding.tvFenrirHp.also { tvFenrir ->
-            tvFenrir.text = (tvFenrir.text.toString().toInt() - damage).toString()
-        }
-        binding.pbFenrirHp.progress -= damage
+        // HPテキストの更新
+        // 値をデコードして使用
+        binding.tvFenrirHp.text = fenrirHp.xor(fenrirRandom).toString()
+        // HPのprogressを更新
+        // 値をデコードして使用
+        binding.pbFenrirHp.progress = fenrirHp.xor(fenrirRandom)
     }
     private fun fenrirAttack(tvMessage: TextView){
         // ダメージを1～150の間のランダムに設定
         damage = Random.nextInt(150) + 1
+        // HPの更新
+        // 値をデコードして使用した後にグローバル領域に再びエンコードして保存
+        userHp = (userHp.xor(userRandom) - damage).xor(userRandom)
 
         // メッセージの更新
         tvMessage.text = getString(R.string.textMessage3, damage, username)
-        // HPの更新
-        binding.tvUserHp.also { tvUser ->
-            tvUser.text = (tvUser.text.toString().toInt() - damage).toString()
-        }
-        binding.pbUserHp.progress -= damage
+        // HPテキストの更新
+        // 値をデコードして使用
+        binding.tvUserHp.text = userHp.xor(userRandom).toString()
+        // HPのprogressを更新
+        // 値をデコードして使用
+        binding.pbUserHp.progress = userHp.xor(userRandom)
     }
 }
