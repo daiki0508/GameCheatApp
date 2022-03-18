@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">GameCheatXOR</string>
+    <string name="tv_username">UserName:</string>
+    <string name="bt_start">Start</string>
+
+    <string name="tv_turn">Turn:</string>
+    <string name="tv_hp">HP:</string>
+    <string name="tv_fenrir">Fenrir</string>
+
+    <string name="textMessage">Fenrir has appeared.</string>
+    <string name="textMessage2">%1$s\'s attack!\n%2$d damage to Fenrir!</string>
+    <string name="textMessage3">Fenrir\'s attack!\n%1$d damage to %2$s!</string>
+
+    <string name="tv_over">GAME OVER</string>
+    <string name="tv_clear">GAME CLEAR</string>
+    <string name="tv_max_damage">MaxDamage:</string>
+    <string name="bt_again">Try Again</string>
+    <string name="bt_send">Send the Result</string>
+    <string name="confirm">Confirm</string>
+</resources>
