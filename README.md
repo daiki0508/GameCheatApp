@@ -7,4 +7,4 @@
 * Fridaを使用して処理を改ざんするチート
 * apk-meditを利用したメモリ改ざんチート
 
-[詳細な情報](https://www.notion.so/GameCheatApp-3569b0e7c85e433287813105a3053e9a)
+[詳細な情報](https://bony-bubble-326.notion.site/GameCheatApp-3569b0e7c85e433287813105a3053e9a)
